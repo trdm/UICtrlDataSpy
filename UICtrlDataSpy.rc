@@ -1,0 +1,273 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Russian resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_RUS)
+#ifdef _WIN32
+LANGUAGE LANG_RUSSIAN, SUBLANG_DEFAULT
+#pragma code_page(1251)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_FIND2               ICON    DISCARDABLE     "res\\icon1.ico"
+#endif    // Russian resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON    DISCARDABLE     "res\\UICtrlDataSpy.ico"
+IDI_FIND                ICON    DISCARDABLE     "res\\find.ico"
+IDI_CTRLVISIBLE         ICON    DISCARDABLE     "res\\CtrlVisible.ico"
+IDI_CTRLINVISIBLE       ICON    DISCARDABLE     "res\\CtrlInvisible.ico"
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)\r\n"
+    "#ifdef _WIN32\r\n"
+    "LANGUAGE 9, 1\r\n"
+    "#pragma code_page(1252)\r\n"
+    "#endif //_WIN32\r\n"
+    "#include ""res\\UICtrlDataSpy.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""afxres.rc""         // Standard components\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_MAIN DIALOGEX 0, 0, 500, 297
+STYLE WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_POPUP | WS_VISIBLE | WS_CAPTION | 
+    WS_SYSMENU | WS_THICKFRAME
+EXSTYLE WS_EX_APPWINDOW
+CAPTION "UI Control Data Spy"
+FONT 8, "Tahoma"
+BEGIN
+    ICON            IDI_FIND,IDC_WNDFINDER,120,2,21,20,SS_NOTIFY | 
+                    SS_REALSIZEIMAGE
+    EDITTEXT        IDC_HWND,35,7,50,12,ES_AUTOHSCROLL | ES_READONLY
+    CONTROL         "Smallest Top",IDC_SMALLESTTOP,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,145,7,55,12
+    LTEXT           "Caption",IDC_STATIC,5,24,30,8
+    EDITTEXT        IDC_CAPTION,35,22,203,12,ES_AUTOHSCROLL | ES_READONLY
+    LTEXT           "Class",IDC_STATIC,9,38,20,8
+    EDITTEXT        IDC_CLASS,35,37,141,12,ES_AUTOHSCROLL | ES_READONLY
+    PUSHBUTTON      "Flash",IDC_FLASH,5,54,50,12
+    CONTROL         "Auto size",IDC_AUTOSIZE,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,60,54,45,12
+    PUSHBUTTON      "Locate >>",IDC_LOCATE,170,54,50,12
+    PUSHBUTTON      "Get Data",IDC_GETDATA,5,69,50,12
+    CONTROL         "Get more data...",IDC_GETMORE,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,60,69,105,12
+    PUSHBUTTON      "Copy Data",IDC_COPYDATA,170,69,50,12
+    EDITTEXT        IDC_DATA,5,82,236,213,ES_MULTILINE | ES_AUTOVSCROLL | 
+                    ES_AUTOHSCROLL | ES_READONLY | WS_VSCROLL | WS_HSCROLL
+    CONTROL         "Tree1",IDC_WNDTREE,"SysTreeView32",TVS_HASBUTTONS | 
+                    TVS_HASLINES | TVS_LINESATROOT | TVS_SHOWSELALWAYS | 
+                    WS_BORDER | WS_TABSTOP,244,20,252,275
+    RTEXT           "Handle",IDC_STATIC,0,9,30,8
+    RTEXT           "Finder",IDC_STATIC,90,9,25,8
+    PUSHBUTTON      "Refresh",IDC_REFRESH,245,4,50,12
+    CONTROL         "List invisible",IDC_LISTINVISIBLE,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,300,4,59,12
+    PUSHBUTTON      "!",IDC_ABOUT,481,4,15,12
+    PUSHBUTTON      "Exit",IDC_EXIT,395,4,50,12
+END
+
+IDD_ABOUT DIALOGEX 0, 0, 87, 80
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_TOOLWINDOW
+CAPTION "About"
+FONT 8, "Tahoma", 0, 0, 0x1
+BEGIN
+    CONTROL         137,IDC_STATIC,"Static",SS_BITMAP | SS_REALSIZEIMAGE,0,0,
+                    88,80
+END
+
+
+#ifndef _MAC
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,1,0
+ PRODUCTVERSION 1,0,1,0
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904b0"
+        BEGIN
+            VALUE "Comments", "Author - Nishad S\0"
+            VALUE "CompanyName", "\0"
+            VALUE "FileDescription", "UICtrlDataSpy Application\0"
+            VALUE "FileVersion", "1, 0, 1, 0\0"
+            VALUE "InternalName", "UICtrlDataSpy\0"
+            VALUE "LegalCopyright", "Freeware\0"
+            VALUE "LegalTrademarks", "\0"
+            VALUE "OriginalFilename", "UICtrlDataSpy.EXE\0"
+            VALUE "PrivateBuild", "\0"
+            VALUE "ProductName", "UICtrlDataSpy Application\0"
+            VALUE "ProductVersion", "1, 0, 1, 0\0"
+            VALUE "SpecialBuild", "\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+#endif    // !_MAC
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_MAIN, DIALOG
+    BEGIN
+        RIGHTMARGIN, 496
+        BOTTOMMARGIN, 295
+    END
+
+    IDD_ABOUT, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 80
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 73
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// 24
+//
+
+1                       24      DISCARDABLE     "res\\UICtrlDataSpy.manifest"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_CONTEXT MENU DISCARDABLE 
+BEGIN
+    POPUP "WndTree"
+    BEGIN
+        MENUITEM "Flash",                       ID_WNDTREE_FLASH
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_ABOUT               BITMAP  DISCARDABLE     "res\\about.bmp"
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE 9, 1
+#pragma code_page(1252)
+#endif //_WIN32
+#include "res\UICtrlDataSpy.rc2"  // non-Microsoft Visual C++ edited resources
+#include "afxres.rc"         // Standard components
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+
