@@ -13,7 +13,13 @@
 #endif // _MSC_VER > 1000
 
 #include "WndFinder.h"
+#include "SplitterControl.h"
 
+
+
+#define STD_GAP             8
+#define STD_BUTTON_WIDTH    90
+#define STD_BUTTON_HEIGHT   25
 /////////////////////////////////////////////////////////////////////////////
 // UICtrlDataSpyDlg dialog
 
@@ -31,6 +37,7 @@ public:
 	BOOL	m_bAutoSize;
 	BOOL	m_bGetMore;
 	CButton	m_btnGetMore;
+	CButton	m_btnGetMenuData;
 	CString	m_csHWND;
 	CString	m_csClass;
 	CString	m_csCaption;
@@ -38,6 +45,7 @@ public:
 	CEdit	m_editData;
 	BOOL	m_bListInvisible;
 	CTreeCtrl	m_treeWnd;
+    CSplitterControl    m_wndSplitter1;
 	//}}AFX_DATA
 
 	// ClassWizard generated virtual function overrides
@@ -58,8 +66,11 @@ protected:
 	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
 	afx_msg void OnSmallestTop();
 	afx_msg void OnGetData();
+	afx_msg void OnGetMenuData();	
 	afx_msg void OnCopyData();
 	afx_msg void OnFlash();
+	afx_msg void OnSizing(UINT fwSide, LPRECT pRect);	
+	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg void OnLocate();
 	afx_msg void OnListInvisible();
 	afx_msg void OnRefresh();
@@ -75,6 +86,9 @@ private:
 
     void OnOK() {}
     void OnCancel() {}
+    // trdm 
+	void ResizeCtrls();
+	void scanMenu(HMENU psHMenu, TCHAR* inputCapt);
 
     LRESULT OnRMWFActionStatus( WPARAM wParam, LPARAM lParam );
     LRESULT OnRMWFWindowFound( WPARAM wParam, LPARAM lParam );
@@ -97,8 +111,11 @@ private:
 private:
     HWND m_hWndCtrl;
     CSize m_sizeNormal;
+    CSize m_sizeNormalEdit;
+    CSize m_sizeNormalTree;
     CSize m_sizeMinimal;
     CImageList m_ilWndTree;
+	bool m_spliterIsCreate;
 };
 
 //{{AFX_INSERT_LOCATION}}

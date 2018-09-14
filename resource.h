@@ -30,21 +30,23 @@
 #define IDC_CAPTION                     1008
 #define IDC_GETMORE                     1009
 #define IDC_COPYDATA                    1010
+#define IDC_GETMENUDATA                 1011
 #define IDC_SMALLESTTOP                 1012
 #define IDC_REFRESH                     1013
 #define IDC_AUTOSIZE                    1014
 #define IDC_LISTINVISIBLE               1015
 #define IDC_ABOUT                       1016
 #define IDC_EXIT                        1017
+#define IDC_SPLITTER1                   1019
 #define ID_WNDTREE_FLASH                32774
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        139
+#define _APS_NEXT_RESOURCE_VALUE        140
 #define _APS_NEXT_COMMAND_VALUE         32775
-#define _APS_NEXT_CONTROL_VALUE         1017
+#define _APS_NEXT_CONTROL_VALUE         1020
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

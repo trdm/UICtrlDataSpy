@@ -47,6 +47,7 @@ void UICtrlDataSpyDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Check(pDX, IDC_AUTOSIZE, m_bAutoSize);
 	DDX_Check(pDX, IDC_GETMORE, m_bGetMore);
 	DDX_Control(pDX, IDC_GETMORE, m_btnGetMore);
+	DDX_Control(pDX, IDC_GETMENUDATA, m_btnGetMenuData);	
 	DDX_Text(pDX, IDC_HWND, m_csHWND);
 	DDX_Text(pDX, IDC_CLASS, m_csClass);
 	DDX_Text(pDX, IDC_CAPTION, m_csCaption);
@@ -60,10 +61,13 @@ void UICtrlDataSpyDlg::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(UICtrlDataSpyDlg, CDialog)
 	//{{AFX_MSG_MAP(UICtrlDataSpyDlg)
 	ON_WM_PAINT()
+	ON_WM_SIZING()
+	ON_WM_SIZE()
 	ON_WM_QUERYDRAGICON()
 	ON_WM_CTLCOLOR()
 	ON_BN_CLICKED(IDC_SMALLESTTOP, OnSmallestTop)
 	ON_BN_CLICKED(IDC_GETDATA, OnGetData)
+	ON_BN_CLICKED(IDC_GETMENUDATA, OnGetMenuData)	
 	ON_BN_CLICKED(IDC_COPYDATA, OnCopyData)
 	ON_BN_CLICKED(IDC_FLASH, OnFlash)
 	ON_BN_CLICKED(IDC_LOCATE, OnLocate)
@@ -95,9 +99,12 @@ BOOL UICtrlDataSpyDlg::OnInitDialog()
     m_sizeNormal.cy = rect.Height();
     m_sizeMinimal.cx = 360; // 391
     m_sizeMinimal.cy = 85; //113
+    m_editData.GetWindowRect( &rect );
+	m_sizeNormalEdit.cx = rect.Width();
+    m_sizeNormalEdit.cy = rect.Height();
 
     SetGetMore();
-    m_editData.SetTabStops( 8 );
+    m_editData.SetTabStops( 8 ); // 4 мало
     m_wndfinder.FindSmallestTop( FALSE != m_bSmallestTop );
 
     m_ilWndTree.Create( 16, 16, ILC_COLOR32, 0, 2 );
@@ -105,9 +112,79 @@ BOOL UICtrlDataSpyDlg::OnInitDialog()
     m_ilWndTree.Add( AfxGetApp()->LoadIcon( IDI_CTRLINVISIBLE ));
     m_treeWnd.SetImageList( &m_ilWndTree, TVSIL_NORMAL );
 
-    PostMessage( WM_COMMAND, MAKEWPARAM( IDC_REFRESH, BN_CLICKED ));
+    m_treeWnd.GetWindowRect( &rect );
+	m_sizeNormalTree.cx = rect.Width();
+    m_sizeNormalTree.cy = rect.Height();
 	
+
+    PostMessage( WM_COMMAND, MAKEWPARAM( IDC_REFRESH, BN_CLICKED ));
+
+	CRect rc;
+	CWnd* pWnd;
+	m_spliterIsCreate = false; // Начинает 
+	if (m_spliterIsCreate) 	{
+		pWnd = GetDlgItem(IDC_SPLITTER1);
+		pWnd->GetWindowRect(rc);
+		ScreenToClient(rc);
+		BOOL bRet = m_wndSplitter1.Create(WS_CHILD | WS_VISIBLE, rc, this, IDC_SPLITTER1, SPS_VERTICAL|SPS_DELTA_NOTIFY);//, RGB(255, 0, 0));
+		if (FALSE == bRet)
+		{
+			AfxMessageBox(_T("m_wndSplitter1 create failed"));
+		}
+
+		//  register windows for splitter
+		this->m_wndSplitter1.RegisterLinkedWindow(SPLS_LINKED_LEFT,     GetDlgItem(IDC_WNDTREE));
+		this->m_wndSplitter1.RegisterLinkedWindow(SPLS_LINKED_RIGHT,    GetDlgItem(IDC_DATA));
+		
+		//  relayout the splotter to make them good look
+		this->m_wndSplitter1.Relayout();
+	} else {
+		pWnd = GetDlgItem(IDC_WNDTREE);
+		//pWnd->SetWindo
+	}	
 	return TRUE;  // return TRUE  unless you set the focus to a control
+}
+
+int MIN(int x, int y) {
+	if (x < y) return x;
+	return y;
+}
+
+void UICtrlDataSpyDlg::ResizeCtrls(){
+	CRect wrct;
+	GetWindowRect(wrct);
+	int delta = (wrct.bottom-wrct.top) - m_sizeNormal.cy - 27;// размер заголовка
+	int deltaX = (wrct.right-wrct.left) - m_sizeNormal.cx;
+	int minX = (wrct.right-wrct.left);
+	
+	RECT R_ed;	m_editData.GetWindowRect(&R_ed);	ScreenToClient(&R_ed);
+	m_editData.MoveWindow(R_ed.left, R_ed.top, MIN(m_sizeNormalEdit.cx  +deltaX,minX),  m_sizeNormalEdit.cy  +delta );
+
+	RECT R_tr;
+	m_treeWnd.GetWindowRect(&R_tr);	ScreenToClient(&R_tr);
+	m_treeWnd.MoveWindow(R_tr.left, R_tr.top, R_tr.right-R_tr.left,  m_sizeNormalTree.cy  +delta ); // Норм.
+	if (m_spliterIsCreate)	{
+		m_wndSplitter1.GetWindowRect(&R_tr);	ScreenToClient(&R_tr);
+		m_wndSplitter1.MoveWindow(R_tr.left, R_tr.top, R_tr.right-R_tr.left,  m_sizeNormalTree.cy  +delta ); 
+	}
+}
+
+void UICtrlDataSpyDlg::OnSizing(UINT nSide, LPRECT lpRect) {
+	CDialog::OnSizing(nSide, lpRect);
+	//ResizeCtrls();
+	return;
+
+	int delta = (lpRect->bottom-lpRect->top) - m_sizeNormal.cy - 27;// размер заголовка
+
+	RECT R_ed;
+	m_editData.GetWindowRect(&R_ed);
+	ScreenToClient(&R_ed);
+	m_editData.MoveWindow(R_ed.left, R_ed.top, R_ed.right-R_ed.left,  m_sizeNormalEdit.cy  +delta );
+}
+void UICtrlDataSpyDlg::OnSize(UINT nType, int cx, int cy) {
+	CDialog::OnSize(nType, cx, cy);
+	if (IsWindowVisible())
+		ResizeCtrls();
 }
 
 void UICtrlDataSpyDlg::OnPaint() 
@@ -164,6 +241,88 @@ void UICtrlDataSpyDlg::OnSmallestTop()
     UpdateData();
 
     m_wndfinder.FindSmallestTop( FALSE != m_bSmallestTop );
+}
+
+
+
+char* chOutFile[MAX_PATH];
+
+void UICtrlDataSpyDlg::scanMenu(HMENU psHMenu, TCHAR* inputCapt = 0){
+	int iCount = ::GetMenuItemCount(psHMenu);
+	TCHAR menu_title[256];
+	TCHAR str[256];
+	char str_2[256];
+	CString rusBuf;
+	CString tStr = "";
+	CString tStr2 = "";
+	CString csStr;
+	for (int i = 0; i < iCount; i++) {
+		UINT uim = ::GetMenuItemID(psHMenu, i);
+		int len = ::GetMenuString(psHMenu, i, menu_title, MAX_PATH,MF_BYPOSITION);
+
+
+		rusBuf = menu_title;
+		str[0]='\0';
+		//cout << "Menu item uim - " << uim << "title:" << Rus(str) << endl;
+		MENUITEMINFO lpmii;
+		ZeroMemory(&lpmii, sizeof(lpmii));
+		lpmii.cbSize = sizeof(lpmii); //?????!
+		lpmii.fMask = MIIM_SUBMENU;     // information to get 
+		int res = ::GetMenuItemInfo(psHMenu, i, true, &lpmii);
+		tStr2.Empty();
+		if (!lpmii.hSubMenu){
+			//tStr2.Format(_T("(%d)"), uim);
+		}
+		tStr.Empty();
+		if (inputCapt) {
+			tStr = inputCapt;
+			tStr += _T("->");
+			tStr += rusBuf + tStr2;
+			m_csData += tStr;
+		} else {
+			tStr = rusBuf + tStr2;
+			m_csData += tStr;
+		}
+		m_csData += _T( "\r\n" );
+
+		
+		if (lpmii.hSubMenu) {
+			int nLen = 0;
+			if (inputCapt) {
+				nLen = _tcslen(inputCapt);
+				if (nLen> 0) nLen += 2;
+			}
+			nLen += (len+3);
+			TCHAR newCap[1000];// = new char(nLen);
+			if (inputCapt){
+				_tcscpy(newCap,inputCapt);				
+				_tcscat(newCap,_T("->"));
+				_tcscat(newCap,rusBuf);
+			} else {
+				_tcscpy(newCap,rusBuf);
+			}
+			scanMenu(lpmii.hSubMenu, newCap);
+		}		
+	}	
+}
+
+void UICtrlDataSpyDlg::OnGetMenuData() {
+    UpdateData();
+	
+    m_csData.Empty();
+	
+    if( !::IsWindow( m_hWndCtrl ))
+    {
+        DisplayInvalidWndMsg();
+        return;
+    }
+	HMENU hMenu = ::GetMenu(m_hWndCtrl);
+	if (hMenu != NULL) {
+		m_csData.Empty();
+		scanMenu(hMenu,NULL);
+	}	
+	UpdateData( FALSE );
+
 }
 
 void UICtrlDataSpyDlg::OnGetData() 
@@ -416,6 +575,15 @@ LRESULT UICtrlDataSpyDlg::OnRMWFWindowFound( WPARAM wParam, LPARAM lParam )
     {
         SetGetMore();
     }
+	m_btnGetMenuData.EnableWindow( FALSE );
+	HMENU hMenu = ::GetMenu(hWnd);
+	if (hMenu != NULL) {
+		int iCount = ::GetMenuItemCount(hMenu);
+		if (iCount > 0){
+			m_btnGetMenuData.EnableWindow( TRUE );
+		}
+	}	
+
 
     // data
     m_csData.Empty();
@@ -742,7 +910,7 @@ void UICtrlDataSpyDlg::SetGetMore( LPCTSTR lpctszStr )
 {
     if( 0 == lpctszStr )
     {
-        m_btnGetMore.EnableWindow( FALSE );
+        m_btnGetMore.EnableWindow( FALSE );		
         m_btnGetMore.SetWindowText( _T( "More data..." ));
     }
     else
@@ -750,6 +918,7 @@ void UICtrlDataSpyDlg::SetGetMore( LPCTSTR lpctszStr )
         m_btnGetMore.EnableWindow( TRUE );
         m_btnGetMore.SetWindowText( lpctszStr );
     }
+	m_btnGetMenuData.EnableWindow( FALSE );
 }
 
 void UICtrlDataSpyDlg::DisplayInvalidWndMsg()

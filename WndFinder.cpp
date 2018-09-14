@@ -203,7 +203,8 @@ void WndFinder::HighlightWindow( HWND hWnd )
     m_hWndOld = hWnd;
 
     CWindowDC dc( pWnd );
-    COLORREF clr = RGB( 255, 192, 0 );
+    //COLORREF clr = RGB( 255, 192, 0 );
+    COLORREF clr = RGB( 255, 0, 0 );
     // if the window has a region, use it
     CRgn rgn;
     rgn.CreateRectRgn( 0, 0, 0, 0 );

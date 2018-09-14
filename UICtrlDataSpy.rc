@@ -97,11 +97,11 @@ END
 // Dialog
 //
 
-IDD_MAIN DIALOGEX 0, 0, 500, 297
+IDD_MAIN DIALOGEX 0, 0, 539, 238
 STYLE WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_POPUP | WS_VISIBLE | WS_CAPTION | 
     WS_SYSMENU | WS_THICKFRAME
 EXSTYLE WS_EX_APPWINDOW
-CAPTION "UI Control Data Spy"
+CAPTION "UI Control Data Spy (trdm editions)"
 FONT 8, "Tahoma"
 BEGIN
     ICON            IDI_FIND,IDC_WNDFINDER,120,2,21,20,SS_NOTIFY | 
@@ -110,29 +110,32 @@ BEGIN
     CONTROL         "Smallest Top",IDC_SMALLESTTOP,"Button",BS_AUTOCHECKBOX | 
                     WS_TABSTOP,145,7,55,12
     LTEXT           "Caption",IDC_STATIC,5,24,30,8
-    EDITTEXT        IDC_CAPTION,35,22,203,12,ES_AUTOHSCROLL | ES_READONLY
+    EDITTEXT        IDC_CAPTION,35,22,241,12,ES_AUTOHSCROLL | ES_READONLY
     LTEXT           "Class",IDC_STATIC,9,38,20,8
     EDITTEXT        IDC_CLASS,35,37,141,12,ES_AUTOHSCROLL | ES_READONLY
-    PUSHBUTTON      "Flash",IDC_FLASH,5,54,50,12
+    PUSHBUTTON      "Flash",IDC_FLASH,116,52,50,12
     CONTROL         "Auto size",IDC_AUTOSIZE,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,60,54,45,12
-    PUSHBUTTON      "Locate >>",IDC_LOCATE,170,54,50,12
-    PUSHBUTTON      "Get Data",IDC_GETDATA,5,69,50,12
+                    WS_TABSTOP,186,52,45,12
+    PUSHBUTTON      "Locate",IDC_LOCATE,58,52,50,12
+    PUSHBUTTON      "Get Data",IDC_GETDATA,288,6,41,12
     CONTROL         "Get more data...",IDC_GETMORE,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,60,69,105,12
-    PUSHBUTTON      "Copy Data",IDC_COPYDATA,170,69,50,12
-    EDITTEXT        IDC_DATA,5,82,236,213,ES_MULTILINE | ES_AUTOVSCROLL | 
+                    WS_TABSTOP,332,6,105,12
+    PUSHBUTTON      "Copy Data",IDC_COPYDATA,493,6,42,12
+    EDITTEXT        IDC_DATA,283,23,254,213,ES_MULTILINE | ES_AUTOVSCROLL | 
                     ES_AUTOHSCROLL | ES_READONLY | WS_VSCROLL | WS_HSCROLL
     CONTROL         "Tree1",IDC_WNDTREE,"SysTreeView32",TVS_HASBUTTONS | 
                     TVS_HASLINES | TVS_LINESATROOT | TVS_SHOWSELALWAYS | 
-                    WS_BORDER | WS_TABSTOP,244,20,252,275
-    RTEXT           "Handle",IDC_STATIC,0,9,30,8
-    RTEXT           "Finder",IDC_STATIC,90,9,25,8
-    PUSHBUTTON      "Refresh",IDC_REFRESH,245,4,50,12
-    CONTROL         "List invisible",IDC_LISTINVISIBLE,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,300,4,59,12
-    PUSHBUTTON      "!",IDC_ABOUT,481,4,15,12
-    PUSHBUTTON      "Exit",IDC_EXIT,395,4,50,12
+                    WS_BORDER | WS_TABSTOP,4,69,274,167
+    RTEXT           "Handle",IDC_STATIC,1,8,30,8
+    RTEXT           "Finder",IDC_STATIC,90,8,25,8
+    PUSHBUTTON      "Refresh",IDC_REFRESH,5,52,50,12
+    CONTROL         "List invisible wnd",IDC_LISTINVISIBLE,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,184,39,67,8
+    PUSHBUTTON      "!",IDC_ABOUT,264,4,15,12
+    PUSHBUTTON      "Exit",IDC_EXIT,233,4,30,12
+    PUSHBUTTON      "Get menu",IDC_GETMENUDATA,440,7,44,12
+    CONTROL         "",IDC_SPLITTER1,"Static",SS_BLACKFRAME | NOT WS_VISIBLE,
+                    279,5,4,231
 END
 
 IDD_ABOUT DIALOGEX 0, 0, 87, 80
@@ -202,8 +205,8 @@ GUIDELINES DESIGNINFO DISCARDABLE
 BEGIN
     IDD_MAIN, DIALOG
     BEGIN
-        RIGHTMARGIN, 496
-        BOTTOMMARGIN, 295
+        RIGHTMARGIN, 537
+        BOTTOMMARGIN, 236
     END
 
     IDD_ABOUT, DIALOG
@@ -222,7 +225,7 @@ END
 // 24
 //
 
-1                       24      DISCARDABLE     "res\\UICtrlDataSpy.manifest"
+//1                       24      DISCARDABLE     "res\\UICtrlDataSpy.manifest"
 
 /////////////////////////////////////////////////////////////////////////////
 //
