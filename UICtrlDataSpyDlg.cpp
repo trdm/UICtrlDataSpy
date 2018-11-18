@@ -33,6 +33,7 @@ UICtrlDataSpyDlg::UICtrlDataSpyDlg(CWnd* pParent /*=NULL*/)
 	m_csClass = _T("");
 	m_csCaption = _T("");
 	m_csData = _T("");
+	m_csFindStr =  _T("Ctrl+Shift+Alt");
 	m_bListInvisible = FALSE;
 	//}}AFX_DATA_INIT
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
@@ -52,6 +53,7 @@ void UICtrlDataSpyDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_CLASS, m_csClass);
 	DDX_Text(pDX, IDC_CAPTION, m_csCaption);
 	DDX_Text(pDX, IDC_DATA, m_csData);
+	DDX_Text(pDX, IDC_EDIT_FND, m_csFindStr );	
 	DDX_Control(pDX, IDC_DATA, m_editData);
 	DDX_Check(pDX, IDC_LISTINVISIBLE, m_bListInvisible);
 	DDX_Control(pDX, IDC_WNDTREE, m_treeWnd);
@@ -69,6 +71,7 @@ BEGIN_MESSAGE_MAP(UICtrlDataSpyDlg, CDialog)
 	ON_BN_CLICKED(IDC_GETDATA, OnGetData)
 	ON_BN_CLICKED(IDC_GETMENUDATA, OnGetMenuData)	
 	ON_BN_CLICKED(IDC_COPYDATA, OnCopyData)
+	ON_BN_CLICKED(IDC_BTN_SRCH, onSearche)	
 	ON_BN_CLICKED(IDC_FLASH, OnFlash)
 	ON_BN_CLICKED(IDC_LOCATE, OnLocate)
 	ON_BN_CLICKED(IDC_LISTINVISIBLE, OnListInvisible)
@@ -243,7 +246,52 @@ void UICtrlDataSpyDlg::OnSmallestTop()
     m_wndfinder.FindSmallestTop( FALSE != m_bSmallestTop );
 }
 
+// trdm кнопка F3
+void UICtrlDataSpyDlg::onSearche(){
+	UpdateData();
+	CString sData = m_csFindStr;	sData.MakeLower();
 
+	int ln = sData.GetLength();
+	int vPos = 0;
+	CString lineData, lineDataCpy;
+	CStringArray lines;
+	if (sData.IsEmpty() || m_csDataCpy.IsEmpty()) {
+		if (m_csData == m_csDataCpy)
+			return;
+		m_csData = m_csDataCpy;
+		UpdateData( FALSE );
+		return;
+	}
+	m_csData = "";
+	int dLen = m_csDataCpy.GetLength();
+	for (int i = 0; i< dLen; i++)	{
+		if (m_csDataCpy.Mid(i,1) == _T("\r")){
+			if (!lineData.IsEmpty()){
+				lineDataCpy = lineData;
+				lineDataCpy.MakeLower();
+				vPos = lineDataCpy.Find(sData);
+				if (vPos >= 0) {
+					m_csData += lineData;
+					m_csData += _T("\r\n");
+				}	
+			}
+			lineData = "";
+		} else {
+			if (m_csDataCpy.Mid(i,1) != _T("\n"))
+				lineData += m_csDataCpy.Mid(i,1);
+		}
+	}
+	if (!lineData.IsEmpty()){
+		lineDataCpy = lineData;
+		lineDataCpy.MakeLower();
+		vPos = lineDataCpy.Find(sData);
+		if (vPos >= 0) {
+			m_csData += lineData;
+			m_csData += _T("\r\n");
+		}	
+	}
+	UpdateData( FALSE );
+}
 
 char* chOutFile[MAX_PATH];
 
@@ -322,6 +370,7 @@ void UICtrlDataSpyDlg::OnGetMenuData() {
 		scanMenu(hMenu,NULL);
 	}	
 	UpdateData( FALSE );
+	m_csDataCpy = m_csData;
 
 }
 
@@ -363,6 +412,7 @@ void UICtrlDataSpyDlg::OnGetData()
     }
 
     UpdateData( FALSE );
+	m_csDataCpy = m_csData;
 }
 
 void UICtrlDataSpyDlg::OnCopyData() 

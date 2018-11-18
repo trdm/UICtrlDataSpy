@@ -104,7 +104,7 @@ EXSTYLE WS_EX_APPWINDOW
 CAPTION "UI Control Data Spy (trdm editions)"
 FONT 8, "Tahoma"
 BEGIN
-    ICON            IDI_FIND,IDC_WNDFINDER,120,2,21,20,SS_NOTIFY | 
+    ICON            IDI_FIND,IDC_WNDFINDER,120,2,20,20,SS_NOTIFY | 
                     SS_REALSIZEIMAGE
     EDITTEXT        IDC_HWND,35,7,50,12,ES_AUTOHSCROLL | ES_READONLY
     CONTROL         "Smallest Top",IDC_SMALLESTTOP,"Button",BS_AUTOCHECKBOX | 
@@ -121,7 +121,7 @@ BEGIN
     CONTROL         "Get more data...",IDC_GETMORE,"Button",BS_AUTOCHECKBOX | 
                     WS_TABSTOP,332,6,105,12
     PUSHBUTTON      "Copy Data",IDC_COPYDATA,493,6,42,12
-    EDITTEXT        IDC_DATA,283,23,254,213,ES_MULTILINE | ES_AUTOVSCROLL | 
+    EDITTEXT        IDC_DATA,283,38,254,198,ES_MULTILINE | ES_AUTOVSCROLL | 
                     ES_AUTOHSCROLL | ES_READONLY | WS_VSCROLL | WS_HSCROLL
     CONTROL         "Tree1",IDC_WNDTREE,"SysTreeView32",TVS_HASBUTTONS | 
                     TVS_HASLINES | TVS_LINESATROOT | TVS_SHOWSELALWAYS | 
@@ -136,6 +136,9 @@ BEGIN
     PUSHBUTTON      "Get menu",IDC_GETMENUDATA,440,7,44,12
     CONTROL         "",IDC_SPLITTER1,"Static",SS_BLACKFRAME | NOT WS_VISIBLE,
                     279,5,4,231
+    LTEXT           "Filtr:",IDC_STATIC,288,24,16,8
+    PUSHBUTTON      "F",IDC_BTN_SRCH,518,22,17,13
+    EDITTEXT        IDC_EDIT_FND,307,22,208,12,ES_AUTOHSCROLL
 END
 
 IDD_ABOUT DIALOGEX 0, 0, 87, 80
@@ -219,13 +222,6 @@ BEGIN
 END
 #endif    // APSTUDIO_INVOKED
 
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// 24
-//
-
-//1                       24      DISCARDABLE     "res\\UICtrlDataSpy.manifest"
 
 /////////////////////////////////////////////////////////////////////////////
 //

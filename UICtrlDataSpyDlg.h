@@ -42,6 +42,8 @@ public:
 	CString	m_csClass;
 	CString	m_csCaption;
 	CString	m_csData;
+	CString	m_csDataCpy;
+	CString	m_csFindStr;
 	CEdit	m_editData;
 	BOOL	m_bListInvisible;
 	CTreeCtrl	m_treeWnd;
@@ -67,6 +69,7 @@ protected:
 	afx_msg void OnSmallestTop();
 	afx_msg void OnGetData();
 	afx_msg void OnGetMenuData();	
+	afx_msg void onSearche();
 	afx_msg void OnCopyData();
 	afx_msg void OnFlash();
 	afx_msg void OnSizing(UINT fwSide, LPRECT pRect);	
@@ -89,6 +92,7 @@ private:
     // trdm 
 	void ResizeCtrls();
 	void scanMenu(HMENU psHMenu, TCHAR* inputCapt);
+	// trdm 
 
     LRESULT OnRMWFActionStatus( WPARAM wParam, LPARAM lParam );
     LRESULT OnRMWFWindowFound( WPARAM wParam, LPARAM lParam );
